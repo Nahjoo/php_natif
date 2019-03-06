@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rotation index{% endblock %}
+
+{% block body %}
+    <h1>Rotation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Zone</th>
+                <th>Legume</th>
+                <th>Tache</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rotation in rotations %}
+            <tr>
+                <td>{{ rotation.id }}</td>
+                <td>{{ rotation.date ? rotation.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ rotation.zone }}</td>
+                <td>{{ rotation.legume }}</td>
+                <td>{{ rotation.tache }}</td>
+                <td>
+                    <a href="{{ path('rotation_show', {'id': rotation.id}) }}">show</a>
+                    <a href="{{ path('rotation_edit', {'id': rotation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('rotation_new') }}">Create new</a>
+{% endblock %}

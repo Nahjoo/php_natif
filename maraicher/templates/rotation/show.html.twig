@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rotation{% endblock %}
+
+{% block body %}
+    <h1>Rotation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ rotation.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ rotation.date ? rotation.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('rotation_index') }}">back to list</a>
+
+    <a href="{{ path('rotation_edit', {'id': rotation.id}) }}">edit</a>
+
+    {{ include('rotation/_delete_form.html.twig') }}
+{% endblock %}
