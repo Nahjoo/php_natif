@@ -1,0 +1,22 @@
+.planche {
+    display: none;
+}
+
+.serre {
+    display: none;
+}
+
+select{
+    display: flex;
+    align-items: center;
+    margin-top: 3vh;
+}
+
+button{
+    margin-top: 3vh;
+}
+
+.form-check{
+    display: none;
+}
+

@@ -5,28 +5,60 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Maraicher</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
-    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
     
     <div class="container">
-        <form method="POST" name="formulaire" action="" class="select_zone">
-            <select class ="zone_lol">
+        <form method="POST" name="formulaire" class="select_zone">
+            <select class ="form-control zone" name="zone">
                 <option>Selectionnez une zone</option>
                 {% for zone in zones %}
                 <option>{{ zone }}</option>
                 {% endfor %}
+                
             </select>
+
+            <select class="form-control planche" name="planche">
+                <option>Selectionnez une planche</option>
+                {% for planche in planches %}
+                <option>{{ planche }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="form-control serre" name="serre">
+                <option>Selectionnez une serre</option>
+                {% for serre in serres %}
+                <option>{{ serre }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="form-control legume" name="legume">
+                <option>Selectionnez un legume</option>
+                {% for legume in legumes %}
+                <option>{{ legume }}</option>
+                {% endfor %}
+            </select>
+
+            <select class="form-control tache" name="tache">
+                <option>Selectionnez une tache</option>
+                {% for tache in taches %}
+                <option>{{ tache }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="form-check">
+                <input class="form-check-input check" type="checkbox" value="" id="defaultCheck1"> Manuel
+    
+                <input class="form-check-input check" type="checkbox" value="" id="defaultCheck2"> Traction
+            
+            </div>
             <button type="submit" class="btn btn-primary">Confirmer</button>
         </form>
 
-        <!-- <form method="" class="">
-            <select class="planche">
-                <option>Selectionnez une planche</option>
-            </select>
-        </form> -->
+        <p>{{ erreur }}</p>
     </div>
 
 </body>
