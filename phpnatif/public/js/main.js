@@ -1,6 +1,5 @@
 var select_zone = document.querySelector(".zone");
 select_zone.addEventListener("change", zone);
-
 var select_planche = document.querySelector(".planche");
 var select_serre = document.querySelector(".serre");
 var select_tache = document.querySelector(".tache");
@@ -29,7 +28,7 @@ function zone(event){
 
 function tache() {
 
-    if(select_tache.value == "Couvert"){
+    if(select_tache.value == "Preparation"){
         check.style.display = "block";
     }else {
         check.style.display = "none";

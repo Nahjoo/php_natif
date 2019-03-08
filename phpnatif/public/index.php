@@ -33,6 +33,12 @@ $connectionParams = [
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
 
+$erreur = "";
+$select_planche = "";
+$select_serre = "";
+$select_preparation = "";
+
+
 // recuperation de la table zone
 $reponse = $conn->query("SELECT * FROM zone");
 while($req = $reponse->fetch()){
@@ -66,32 +72,51 @@ while($req = $reponse->fetch()){
 
 
 if($_POST){
-    $select_zone = $_POST["zone"];
-    $select_planche = $_POST["planche"];
-    $select_serre = $_POST["serre"];
-    $select_legume = $_POST["legume"];
-    $select_tache = $_POST["tache"];   
-}
 
-if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" ){
-    $erreur = "Veuillez remplir tout les champs";
-} else {
-    $req = $conn->prepare('INSERT INTO rotation(zone , number_serre, number_planche ,legume, tache) VALUES(:zone ,:number_serre, :number_planche ,:legume , :tache )');
-    $req->execute(array(
-        'zone' => $select_zone,
-        'number_serre' => $select_serre,
-        'number_planche' => $select_planche,
-        'legume' => $select_legume,
-        'tache' => $select_tache,
-    ));
-}
-
-
+    if($_POST["zone"] == "Jardin" ){
+        $select_planche = $_POST["planche"];
+    } else {
+        $select_planche = null;
+    }
     
+    if($_POST["zone"] == "Serre"){
+        $select_serre = $_POST["serre"];
+        
+    }else {
+        $select_serre = null;
+        
+    }
+
+    $select_zone = $_POST["zone"];
+    $select_legume = $_POST["legume"];
+    $select_tache = $_POST["tache"];
+    if(isset($_POST["manuel"])){
+        $select_preparation = $_POST["manuel"];
+        
+    }else {
+        $select_preparation = $_POST["traction"];
+        
+    }
+    
+    if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" ){
+        $erreur = "Veuillez remplir tout les champs";
+    } else {
+        $req = $conn->prepare('INSERT INTO rotation(zone , number_serre, number_planche ,legume, tache) VALUES(:zone ,:number_serre, :number_planche ,:legume , :tache )');
+        $req->execute(array(
+            'zone' => $select_zone,
+            'number_serre' => $select_serre,
+            'number_planche' => $select_planche,
+            'legume' => $select_legume,
+            'tache' => $select_tache." ".$select_preparation,
+        ));
+    }
+    
+}
+
+
 // affichage du rendu d'un template
 echo $twig->render('index.html.twig', [
 // transmission de données au template
-    'zone_select' => $zone_select,
     'zones' => $zones,
     'planches' => $planches,
     'serres' => $serres,
