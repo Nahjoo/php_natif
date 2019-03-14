@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<main class="add">
+    <div class="card" style="width: 18rem;">
+        <form action="" method="POST">
+            <div class="card-body">
+                <h5 class="card-title">Zone existante</h5>
+                <ul>
+                    {% for zone in zones %}
+                    <li>{{ zone }} {% for zone_id in zones_id %}<a href="add.php?id={{ zone_id }}/" type="submit">⛔</a>{% endfor %}</li>
+                    
+                    {% endfor %}
+                </ul>
+                {% for page in pages %}
+                <a href="/add.php?zone={{ page }}/">/ {{ page }} /</a>
+                {% endfor %}
+            </div>
+            <h6>Ajouter une Zone</h6>
+            <input type="text" name="new_zone"> : Nom
+            <button class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+
+
+    <div class="card" style="width: 20rem;">
+        <form action="" method="POST">
+            <div class="card-body">
+                <h5 class="card-title">Legume existant</h5>
+                <ul>
+                    {% for legume in legumes %}
+                    <li>{{ legume }}</li>
+                    {% endfor %}
+                </ul>
+                {% for serre_page in serre_pages %}
+                <a href="/add.php?serre={{ serre_page }}/">/ {{ serre_page }} /</a>
+                {% endfor %}
+            </div>
+            <h6>Ajouter un Legume</h6>
+            <input type="text" name="new_legume"> : Nom
+            <input type="text" name="new_variete"> : variété
+            <button class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+
+
+    <div class="card" style="width: 18rem;">
+        <form action="" method="POST">
+            <div class="card-body">
+                <h5 class="card-title">Serre existante</h5>
+                <ul>
+                    {% for serre in serres %}
+                    <li>{{ serre }}</li>
+                    {% endfor %}
+                </ul>
+                {% for serre_page in serre_pages %}
+                <a href="/add.php?serre={{ serre_page }}/">/ {{ serre_page }} /</a>
+                {% endfor %}
+            </div>
+            <h6>Ajouter une Serre</h6>
+            <input type="text" name="new_serre"> : Nom
+            <button class="btn btn-primary">Ajouter</button>
+        </form>
+    </div>
+</main>
+
+{% endblock %}

@@ -33,16 +33,39 @@ $connectionParams = [
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
 
-$erreur = "";
-$select_planche = "";
-$select_serre = "";
-$select_preparation = "";
 
+// pagination de la table zone
+$reponse = $conn->query("SELECT Count(id) as nbArt FROM zone");
+$req = $reponse->fetch();
+$nbArt = $req['nbArt'];
+$Perpage = 4;
+$nbPage = ceil($nbArt/$Perpage);
+$cPage = 1;
+
+if(isset($_GET['zone']) && $_GET['zone']>0 && $_GET['zone']<=$nbPage){
+    $cPage = $_GET['zone'];
+}else {
+    $cPage = 1;
+}
 
 // recuperation de la table zone
-$reponse = $conn->query("SELECT * FROM zone");
+$reponse = $conn->query("SELECT * FROM zone LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
 while($req = $reponse->fetch()){
     $zones[] = $req['name'];
+    $zones_id[] = $req ['id'];
+}
+
+if(isset($_GET['id']) && $_GET['id']>0 && $_GET['id']<=$nbArt){
+    $req = $conn->prepare('DELETE FROM zone WHERE `zone`.`id` ='.$_GET['id'] );
+    $req->execute(array(
+        'name' => $add_zone,
+    ));
+}
+
+
+
+for($i=1; $i <= $nbPage; $i++){
+    $pages[] = $i;
 }
 
 // recuperation de la table planche
@@ -51,11 +74,27 @@ while($req = $reponse->fetch()){
     $planches[] = $req['name'];
 }
 
+// pagination de la table serre
+$reponse = $conn->query("SELECT Count(id) as nbArt FROM serre");
+$req = $reponse->fetch();
+$nbArt = $req['nbArt'];
+$Perpage = 4;
+$nbPage = ceil($nbArt/$Perpage);
+$cPage = 1;
+
+if(isset($_GET['serre']) && $_GET['serre']>0 && $_GET['serre']<=$nbPage){
+    $cPage = $_GET['serre'];
+}else {
+    $cPage = 1;
+}
 
 // recuperation de la table serre
-$reponse = $conn->query("SELECT * FROM serre");
+$reponse = $conn->query("SELECT * FROM serre LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
 while($req = $reponse->fetch()){
     $serres[] = $req['name'];
+}
+for($i=1; $i <= $nbPage; $i++){
+    $serre_pages[] = $i;
 }
 
 // recuperation de la table legume
@@ -72,57 +111,34 @@ while($req = $reponse->fetch()){
 
 
 if($_POST){
+    $add_zone = $_POST['new_zone'];
+    $add_legume = $_POST['new_legume'];
+    $add_variete = $_POST['new_variete'];
+    $add_serre = $_POST['new_serre'];
 
-    if(htmlspecialchars($_POST["zone"]) == "Jardin" ){
-        $select_planche = htmlspecialchars($_POST["planche"]);
-    } else {
-        $select_planche = null;
-    }
-    
-    if(htmlspecialchars($_POST["zone"]) == "Serre"){
-        $select_serre = htmlspecialchars($_POST["serre"]);
+
+    if(empty($_POST['new_zone'])){
+        $erreur = "Veuillez remplir le champ vide";
         
     }else {
-        $select_serre = null;
-        
+        $reponse = $conn->query("SELECT * FROM zone");
+        $req = $conn->prepare('INSERT INTO zone(name) VALUES(:name)');
+            $req->execute(array(
+                'name' => $add_zone,
+            ));
     }
-
-    $select_zone = htmlspecialchars($_POST["zone"]);
-    $select_legume = htmlspecialchars($_POST["legume"]);
-    $select_tache = htmlspecialchars($_POST["tache"]);
-
-    if(isset($_POST["manuel"])){
-        $select_preparation = htmlspecialchars($_POST["manuel"]);
-        
-    }else {
-        $select_preparation = htmlspecialchars($_POST["traction"]);
-    }
-    
-    if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" ){
-        $erreur = "Veuillez remplir tout les champs";
-    } else {
-        $req = $conn->prepare('INSERT INTO rotation(zone , number_serre, number_planche ,legume, tache) VALUES(:zone ,:number_serre, :number_planche ,:legume , :tache )');
-        $req->execute(array(
-            'zone' => $select_zone,
-            'number_serre' => $select_serre,
-            'number_planche' => $select_planche,
-            'legume' => $select_legume,
-            'tache' => $select_tache." ".$select_preparation,
-        ));
-        header('Location: /show.php');
-    }
+    header('Location: /add.php');
 }
 
 
 
-
 // affichage du rendu d'un template
-echo $twig->render('index.html.twig', [
-// transmission de données au template
+echo $twig->render('add.html.twig', [
+    // transmission de données au template
     'zones' => $zones,
-    'planches' => $planches,
-    'serres' => $serres,
+    'zones_id' => $zones_id,
     'legumes' => $legumes,
-    'taches' => $taches,
-    'erreur' => $erreur,
+    'serres' => $serres,
+    'pages' => $pages,
+    'serre_pages' => $serre_pages
 ]);

@@ -1,18 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Maraicher</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
+{% extends 'base.html.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+{% endblock %}
+
+{% block script %}
     <script src="js/main.js" defer></script>
-</head>
-<body>
-    
+{% endblock %}
+
+    {% block body %}
     <div class="container">
-        <form method="POST" name="formulaire" class="select_zone">
+        <form method="POST" action="" name="formulaire" class="select_zone">
             <select class ="form-control zone" name="zone">
                 <option>Selectionnez une zone</option>
                 {% for zone in zones %}
@@ -49,17 +48,29 @@
                 {% endfor %}
             </select>
 
-            <div class="form-check">
+            <div class="form-check preparation">
                 <input class="form-check-input check" type="checkbox" name="manuel" value="Manuel" id="defaultCheck1"> Manuel
     
                 <input class="form-check-input check" type="checkbox" name="traction" value="Traction" id="defaultCheck2"> Traction
-            
             </div>
+
+
+            <div class="form-check recolte">
+                <input class="form-check-input" type="checkbox" name="KG" value="kg" id="defaultCheck3"> KG
+                <input class="form-check-input" type="checkbox" name="Bottes" value="bottes" id="defaultCheck4"> Bottes
+                <input class="form-check-input" type="checkbox" name="Unité" value="Unite" id="defaultCheck5"> Unité
+            </div>
+
+            <div class="form-check couvert">
+                <input class="form-check-input" type="checkbox" name="muchage" value="muchage" id="defaultCheck6"> Muchage
+                <input class="form-check-input" type="checkbox" name="desherbage" value="desherbage" id="defaultCheck7"> desherbage
+                <input class="form-check-input" type="checkbox" name="bachage" value="bachage" id="defaultCheck8"> bachage
+            </div>
+
             <button type="submit" class="btn btn-primary">Confirmer</button>
         </form>
 
         <p>{{ erreur }}</p>
     </div>
 
-</body>
-</html>
+    {% endblock %}

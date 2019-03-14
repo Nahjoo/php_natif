@@ -16,7 +16,25 @@ button{
     margin-top: 3vh;
 }
 
-.form-check{
+.preparation{
     display: none;
+}
+
+.recolte {
+    display: none;
+}
+
+.couvert{
+    display: none;
+}
+
+.card{
+    padding: 1vh;
+}
+
+.add{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 

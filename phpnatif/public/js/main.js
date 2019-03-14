@@ -4,33 +4,50 @@ var select_planche = document.querySelector(".planche");
 var select_serre = document.querySelector(".serre");
 var select_tache = document.querySelector(".tache");
 select_tache.addEventListener("change" , tache);
-var check = document.querySelector(".form-check");
+var preparation = document.querySelector(".preparation");
+var recolte = document.querySelector(".recolte");
+var couvert = document.querySelector(".couvert");
+
 
 function zone(event){
     event.preventDefault();
     if(select_zone.value == "Jardin"){
-        console.log("okook");
         select_planche.style.display = "inline";
+        
     }else {
         select_planche.style.display = "none" ;
         select_planche.value = null;
+        
     }
 
     if (select_zone.value == "Serre"){
         select_serre.style.display = "inline";
+
     }else {
         select_serre.style.display = "none" ;
         select_serre.value = null;
     }
-    
 }
-
 
 function tache() {
 
-    if(select_tache.value == "Preparation"){
-        check.style.display = "block";
+    if(select_tache.value == "Preparation sol"){
+        preparation.style.display = "block";
+
     }else {
-        check.style.display = "none";
+        preparation.style.display = "none";
+    }
+    
+    if (select_tache.value == "Récolte"){
+        recolte.style.display = "block";
+
+    }else {
+        recolte.style.display = "none";
+    }
+    
+    if(select_tache.value == "Couvert"){
+        couvert.style.display = "block";
+    }else {
+        couvert.style.display = "none";
     }
 }
