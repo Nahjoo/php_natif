@@ -29,12 +29,49 @@ button{
 }
 
 .card{
+    width: 19rem;
+    height: 25rem;   
     padding: 1vh;
+    margin-top: 3vh;
 }
 
 .add{
     display: flex;
-    align-items: center;
     justify-content: space-around;
 }
+
+@media screen and (max-width: 990px){
+    .card{
+        width: 30rem;
+        height: 23rem;
+    }
+    .add{
+        display: block;
+        margin-left: 27%;
+    }
+}
+
+@media screen and (max-width: 850px){
+    .card{
+        width: 20rem;
+        height: 23rem;
+    }
+    .add{
+        display: block;
+        margin-left: 22%;
+    }
+}
+
+@media screen and (max-width: 480px){
+    .card{
+        width: 19rem;
+        height: 23rem;
+    }
+    .add{
+        display: block;
+        margin-left: 1%;
+       
+    }
+}
+
 

@@ -32,48 +32,14 @@ $connectionParams = [
 // connection à la BDD
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
+$erreur = "";
+
+include ("zone_edit.php");
+include ("legume_edit.php");
+include ("planche_edit.php");
 
 
-// pagination de la table zone
-$reponse = $conn->query("SELECT Count(id) as nbArt FROM zone");
-$req = $reponse->fetch();
-$nbArt = $req['nbArt'];
-$Perpage = 4;
-$nbPage = ceil($nbArt/$Perpage);
-$cPage = 1;
-
-if(isset($_GET['zone']) && $_GET['zone']>0 && $_GET['zone']<=$nbPage){
-    $cPage = $_GET['zone'];
-}else {
-    $cPage = 1;
-}
-
-// recuperation de la table zone
-$reponse = $conn->query("SELECT * FROM zone LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
-while($req = $reponse->fetch()){
-    $zones[] = $req['name'];
-    $zones_id[] = $req ['id'];
-}
-
-if(isset($_GET['id']) && $_GET['id']>0 && $_GET['id']<=$nbArt){
-    $req = $conn->prepare('DELETE FROM zone WHERE `zone`.`id` ='.$_GET['id'] );
-    $req->execute(array(
-        'name' => $add_zone,
-    ));
-}
-
-
-
-for($i=1; $i <= $nbPage; $i++){
-    $pages[] = $i;
-}
-
-// recuperation de la table planche
-$reponse = $conn->query("SELECT * FROM planche");
-while($req = $reponse->fetch()){
-    $planches[] = $req['name'];
-}
-
+//****************************Table serre***************************************************
 // pagination de la table serre
 $reponse = $conn->query("SELECT Count(id) as nbArt FROM serre");
 $req = $reponse->fetch();
@@ -91,54 +57,97 @@ if(isset($_GET['serre']) && $_GET['serre']>0 && $_GET['serre']<=$nbPage){
 // recuperation de la table serre
 $reponse = $conn->query("SELECT * FROM serre LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
 while($req = $reponse->fetch()){
-    $serres[] = $req['name'];
+    $serres[] = $req;
 }
+
+if(isset($_GET['id_serre'])){
+    $id_serre = $_GET['id_serre'];
+    $req = $conn->query("DELETE FROM serre WHERE serre.id = '$id_serre'");
+    header('Location: /add.php');
+}
+
 for($i=1; $i <= $nbPage; $i++){
     $serre_pages[] = $i;
 }
 
-// recuperation de la table legume
-$reponse = $conn->query("SELECT * FROM legume");
-while($req = $reponse->fetch()){
-    $legumes[] = $req['name'];
-}
-
-// recuperation de la table tache
-$reponse = $conn->query("SELECT * FROM tache");
-while($req = $reponse->fetch()){
-    $taches[] = $req['name'];
-}
-
-
-if($_POST){
-    $add_zone = $_POST['new_zone'];
-    $add_legume = $_POST['new_legume'];
-    $add_variete = $_POST['new_variete'];
+if($_POST['new_serre']){
     $add_serre = $_POST['new_serre'];
-
-
-    if(empty($_POST['new_zone'])){
+    
+    if(empty($_POST['new_serre'])){
         $erreur = "Veuillez remplir le champ vide";
         
     }else {
-        $reponse = $conn->query("SELECT * FROM zone");
-        $req = $conn->prepare('INSERT INTO zone(name) VALUES(:name)');
+        $reponse = $conn->query("SELECT * FROM serre");
+        $req = $conn->prepare('INSERT INTO serre(name) VALUES(:name)');
             $req->execute(array(
-                'name' => $add_zone,
+                'name' => $add_serre,
             ));
-    }
+    }   
     header('Location: /add.php');
 }
 
+//****************************END table serre*************************************************
+//******************************Table tache***************************************************
+// pagination de la table tache
+$reponse = $conn->query("SELECT Count(id) as nbArt FROM tache");
+$req = $reponse->fetch();
+$nbArt = $req['nbArt'];
+$Perpage = 4;
+$nbPage = ceil($nbArt/$Perpage);
+$cPage = 1;
 
+if(isset($_GET['tache']) && $_GET['tache']>0 && $_GET['serre']<=$nbPage){
+    $cPage = $_GET['tache'];
+}else {
+    $cPage = 1;
+}
+
+// recuperation de la table tache
+$reponse = $conn->query("SELECT * FROM tache LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
+while($req = $reponse->fetch()){
+    $taches[] = $req;
+}
+
+if(isset($_GET['id_tache'])){
+    $id_tache = $_GET['id_tache'];
+    $req = $conn->query("DELETE FROM tache WHERE tache.id = '$id_tache'");
+    header('Location: /add.php');
+}
+
+for($i=1; $i <= $nbPage; $i++){
+    $tache_pages[] = $i;
+}
+
+if($_POST['new_tache']){
+    $add_tache = $_POST['new_tache'];
+    
+    if(empty($_POST['new_tache'])){
+        $erreur = "Veuillez remplir le champ vide";
+        
+    }else {
+        $reponse = $conn->query("SELECT * FROM tache");
+        $req = $conn->prepare('INSERT INTO tache(name) VALUES(:name)');
+            $req->execute(array(
+                'name' => $add_tache,
+            ));
+    }   
+    header('Location: /add.php');
+}
+
+//******************************END table tache***********************************************
 
 // affichage du rendu d'un template
 echo $twig->render('add.html.twig', [
     // transmission de données au template
     'zones' => $zones,
-    'zones_id' => $zones_id,
+    'planches' => $planches,
     'legumes' => $legumes,
     'serres' => $serres,
+    'taches' => $taches,
     'pages' => $pages,
-    'serre_pages' => $serre_pages
+    'serre_pages' => $serre_pages,
+    'planche_pages' => $planche_pages,
+    'legume_pages' => $legume_pages,
+    'tache_pages' => $tache_pages,
+    'erreur' => $erreur,
 ]);
