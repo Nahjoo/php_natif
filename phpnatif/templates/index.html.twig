@@ -34,6 +34,13 @@
                 {% endfor %}
             </select>
 
+            <select class="form-control planche" name="planche">
+                <option>Selectionnez une planche</option>
+                {% for planche in planches %}
+                <option>{{ planche }}</option>
+                {% endfor %}
+            </select>
+
             <select class="form-control legume" name="legume">
                 <option>Selectionnez un legume</option>
                 {% for legume in legumes %}
@@ -72,8 +79,9 @@
 
         <p>{{ erreur }}</p>
     </div>
-
+    <div class="ligne container"></div>
     <div class="container modifier_ajouter">
+        <h4>Ajouter / supprimer des Zones , legume etc...</h4>
         <form action="add.php">
             <button type="submit" class="btn btn-primary">Ajouter / supprimer</button>
         </form>

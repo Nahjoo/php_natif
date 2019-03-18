@@ -91,12 +91,16 @@ if($_POST){
     $select_legume = htmlspecialchars($_POST["legume"]);
     $select_tache = htmlspecialchars($_POST["tache"]);
 
-    if(isset($_POST["manuel"])){
-        $select_preparation = htmlspecialchars($_POST["manuel"]);
-        
-    }else {
-        $select_preparation = htmlspecialchars($_POST["traction"]);
+    if(isset($_POST['tache']) == "Preparation sol"){
+        if(isset($_POST["manuel"])){
+            $select_preparation = htmlspecialchars($_POST["manuel"]);
+            
+        }else {
+            $select_preparation = htmlspecialchars($_POST["traction"]);
+        }
     }
+
+
     
     if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" ){
         $erreur = "Veuillez remplir tout les champs";
@@ -112,6 +116,8 @@ if($_POST){
         header('Location: /show.php');
     }
 }
+
+
 
 
 
