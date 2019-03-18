@@ -33,14 +33,15 @@ $connectionParams = [
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
 
-
-header('Location: /');
-
+$reponse = $conn->query("SELECT * FROM rotation");
+while($req = $reponse->fetch()){
+    $rotations[] = $req;
+}
 
 
 
 // affichage du rendu d'un template
 echo $twig->render('show.html.twig', [
     // transmission de données au template
-        
+    'rotations' => $rotations,
 ]);

@@ -1,5 +1,36 @@
 {% extends 'base.html.twig' %}
 
-    {% block body %}
-    <h1>Show Rotation</h1>
-    {% endblock %}
+{% block body %}
+<h1>Show Rotation</h1>
+
+<div class="container row">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">ZONE</th>
+                <th scope="col">Numéro Serre</th>
+                <th scope="col">Numéro planche</th>
+                <th scope="col">Légume</th>
+                <th scope="col">Tache</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rotation in rotations %}
+            <tr>
+                <th scope="row">{{ rotation['id'] }}</th>
+                <td>{{ rotation['zone'] }}</td>
+                <td>{{ rotation['number_serre'] }}</td>
+                <td>{{ rotation['number_planche'] }}</td>
+                <td>{{ rotation['legume'] }}</td>
+                <td>{{ rotation['tache'] }}</td>
+            </tr>
+            {% endfor %}
+        
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
