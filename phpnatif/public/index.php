@@ -51,12 +51,12 @@ while($req = $reponse->fetch()){
     $planches[] = $req;
 }
 
-
 // recuperation de la table serre
 $reponse = $conn->query("SELECT * FROM serre");
 while($req = $reponse->fetch()){
     $serres[] = $req;
 }
+
 // recuperation de la table legume
 $reponse = $conn->query("SELECT * FROM legume");
 while($req = $reponse->fetch()){
@@ -89,6 +89,7 @@ if($_POST){
         $select_serre = null;
     }
    
+    
     $select_zone = htmlspecialchars($_POST["zone"]);
     $select_legume = htmlspecialchars($_POST["legume"]);
     $select_tache = htmlspecialchars($_POST["tache"]);
