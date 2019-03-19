@@ -20,7 +20,7 @@
                     {% endfor %}
                 </div>
                 <h6>Ajouter une Zone</h6>
-                <input type="text" name="new_zone"> : Nom
+                <input type="text" name="new_zone" placeholder="Nom">
                 <p></p>
                 <h6>{{ erreur }}</h6>
                 <button class="btn btn-primary">Ajouter</button>
@@ -44,7 +44,7 @@
                     {% endfor %}
                 </div>
                 <h6>Ajouter une Planche</h6>
-                <input type="text" name="new_planche"> : Nom
+                <input type="text" name="new_planche" placeholder="Nom">
                 <p></p>
                 <button class="btn btn-primary">Ajouter</button>
             </form>
@@ -67,8 +67,8 @@
                     {% endfor %}
                 </div>
                 <h6>Ajouter un Legume</h6>
-                <input type="text" name="new_legume"> : Nom
-                <input type="text" name="new_variete"> : variété
+                <input type="text" name="new_legume" placeholder="Nom">
+                <input type="text" name="new_variete" placeholder="variété">
                 <h6>{{ erreur }}</h6>
                 <button class="btn btn-primary">Ajouter</button>
             </form>
@@ -83,7 +83,7 @@
                     <h5 class="card-title">Serre existante</h5>
                     <ul>
                         {% for serre in serres %}
-                        <li>{{ serre['name'] }}<a href="/add.php?id_serre={{ serre['id'] }}/" type="submit">⛔</a></li>
+                        <li>{{ serre['name'] }} / nb planche :{{ serre['number_planche'] }}<a href="/add.php?id_serre={{ serre['id'] }}/" type="submit">⛔</a></li>
                         {% endfor %}
                     </ul>
                     {% for serre_page in serre_pages %}
@@ -91,7 +91,8 @@
                     {% endfor %}
                 </div>
                 <h6>Ajouter une Serre</h6>
-                <input type="text" name="new_serre"> : Nom
+                <input type="text" name="new_serre" placeholder="Nom">
+                <input type="text" name="nb_planche" placeholder="nombre de planches"> 
                 <p></p>
                 <button class="btn btn-primary">Ajouter</button>
             </form>
@@ -114,7 +115,7 @@
                     {% endfor %}
                 </div>
                 <h6>Ajouter une Tache</h6>
-                <input type="text" name="new_tache"> : Nom
+                <input type="text" name="new_tache" placeholder="Nom">
                 <p></p>
                 <button class="btn btn-primary">Ajouter</button>
             </form>

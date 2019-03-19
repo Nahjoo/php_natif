@@ -15,7 +15,7 @@
             <select class ="form-control zone" name="zone">
                 <option>Selectionnez une zone</option>
                 {% for zone in zones %}
-                <option>{{ zone }}</option>
+                <option>{{ zone['name'] }}</option>
                 {% endfor %}
                 
             </select>
@@ -23,35 +23,35 @@
             <select class="form-control planche" name="planche">
                 <option>Selectionnez une planche</option>
                 {% for planche in planches %}
-                <option>{{ planche }}</option>
+                <option>{{ planche['name'] }}</option>
                 {% endfor %}
             </select>
 
             <select class="form-control serre" name="serre">
                 <option>Selectionnez une serre</option>
                 {% for serre in serres %}
-                <option>{{ serre }}</option>
+                <option>{{ serre['name'] }}</option>
                 {% endfor %}
             </select>
 
-            <select class="form-control planche" name="planche">
+            <select class="form-control planche_serre" name="planche_serre">
                 <option>Selectionnez une planche</option>
                 {% for planche in planches %}
-                <option>{{ planche }}</option>
+                <option>{{ planche['name'] }}</option>
                 {% endfor %}
             </select>
 
             <select class="form-control legume" name="legume">
                 <option>Selectionnez un legume</option>
                 {% for legume in legumes %}
-                <option>{{ legume }}</option>
+                <option>{{ legume['name'] }}</option>
                 {% endfor %}
             </select>
 
             <select class="form-control tache" name="tache">
                 <option>Selectionnez une tache</option>
                 {% for tache in taches %}
-                <option>{{ tache }}</option>
+                <option>{{ tache['name'] }}</option>
                 {% endfor %}
             </select>
 
@@ -63,9 +63,9 @@
 
 
             <div class="form-check recolte">
-                <input class="form-check-input" type="checkbox" name="KG" value="kg" id="defaultCheck3"> KG
-                <input class="form-check-input" type="checkbox" name="Bottes" value="bottes" id="defaultCheck4"> Bottes
-                <input class="form-check-input" type="checkbox" name="Unité" value="Unite" id="defaultCheck5"> Unité
+                <input class="form-check-input" type="checkbox" name="kg" value="kg" id="defaultCheck3"> KG
+                <input class="form-check-input" type="checkbox" name="botte" value="botte" id="defaultCheck4"> Bottes
+                <input class="form-check-input" type="checkbox" name="unite" value="unite" id="defaultCheck5"> Unité
             </div>
 
             <div class="form-check couvert">
@@ -78,6 +78,7 @@
         </form>
 
         <p>{{ erreur }}</p>
+        
     </div>
     <div class="ligne container"></div>
     <div class="container modifier_ajouter">
@@ -88,4 +89,5 @@
         
     </div>
 
+    {{ serre_name }}
     {% endblock %}

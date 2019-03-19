@@ -1,6 +1,7 @@
 var select_zone = document.querySelector(".zone");
 select_zone.addEventListener("change", zone);
 var select_planche = document.querySelector(".planche");
+var select_planche_serre = document.querySelector(".planche_serre");
 var select_serre = document.querySelector(".serre");
 var select_tache = document.querySelector(".tache");
 select_tache.addEventListener("change" , tache);
@@ -16,16 +17,17 @@ function zone(event){
         
     }else {
         select_planche.style.display = "none" ;
-        select_planche.value = null;
-        
+        select_planche.value = "Selectionnez une planche";
     }
 
     if (select_zone.value == "Serre"){
         select_serre.style.display = "inline";
-
+        select_planche_serre.style.display = 'inline';
     }else {
         select_serre.style.display = "none" ;
-        select_serre.value = null;
+        select_planche_serre.style.display = 'none';
+        select_serre.value = "Selectionnez une serre";
+        select_planche_serre.value = "Selectionnez une planche";
     }
 }
 

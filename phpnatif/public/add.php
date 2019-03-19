@@ -72,15 +72,17 @@ for($i=1; $i <= $nbPage; $i++){
 
 if($_POST['new_serre']){
     $add_serre = $_POST['new_serre'];
+    $nb_planche = $_POST['nb_planche'];
     
-    if(empty($_POST['new_serre'])){
+    if(empty($_POST['new_serre']) Or empty($_POST['nb_planche'])){
         $erreur = "Veuillez remplir le champ vide";
         
     }else {
         $reponse = $conn->query("SELECT * FROM serre");
-        $req = $conn->prepare('INSERT INTO serre(name) VALUES(:name)');
+        $req = $conn->prepare('INSERT INTO serre(name, number_planche) VALUES(:name, :number_planche)');
             $req->execute(array(
                 'name' => $add_serre,
+                'number_planche' => $nb_planche,
             ));
     }   
     header('Location: /add.php');
