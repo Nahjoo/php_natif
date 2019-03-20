@@ -34,10 +34,11 @@ $connectionParams = [
 $conn = DriverManager::getConnection($connectionParams, $config);
 
 $erreur = "";
+$erreur2 = "";
 $select_planche = "";
 $select_serre = "";
 $serre_name = "";
-$select_preparation = "";
+$select_checkbox = "";
 
 
 // recuperation de la table zone
@@ -71,6 +72,7 @@ while($req = $reponse->fetch()){
 }
 
 if($_POST){
+    
     if(htmlspecialchars($_POST["zone"]) == "Jardin"){
         $select_planche = htmlspecialchars($_POST["planche"]);
         
@@ -94,38 +96,33 @@ if($_POST){
     $select_legume = htmlspecialchars($_POST["legume"]);
     $select_tache = htmlspecialchars($_POST["tache"]);
 
-    if(isset($_POST['tache']) == "Préparation sol"){
+    if($_POST['tache'] == "Préparation sol"){
         if(isset($_POST["manuel"])){
-            $select_preparation = htmlspecialchars($_POST["manuel"]);
-            
+            $select_checkbox = htmlspecialchars($_POST["manuel"]);
+        }elseif(isset($_POST['traction'])) {
+            $select_checkbox = htmlspecialchars($_POST["traction"]);
         }else {
-            if(isset($_POST['traction'])){
-                $select_preparation = htmlspecialchars($_POST["traction"]);
-            }
             
         }
-
-    }elseif(isset($_POST['tache']) == "Récolte"){
-
+    }elseif($_POST['tache'] == "Récolte"){
         if(isset($_POST["kg"])){
-            $select_preparation = htmlspecialchars($_POST['kg']);
+            $select_checkbox = htmlspecialchars($_POST['kg']);
         }elseif(isset($_POST['botte'])){
-            $select_preparation = htmlspecialchars($_POST['botte']);
+            $select_checkbox = htmlspecialchars($_POST['botte']);
         }else {
-            if(isset($_POST['unite'])){
-                $select_preparation = htmlspecialchars($_POST['unite']);
-            }
-            
+            $select_checkbox = htmlspecialchars($_POST['unite']);
+        }
+    }elseif($_POST['tache'] == "Couvert"){
+        if(isset($_POST["muchage"])){
+            $select_checkbox = htmlspecialchars($_POST['muchage']);
+        }elseif(isset($_POST['desherbage'])){
+            $select_checkbox = htmlspecialchars($_POST['desherbage']);
+        }else {
+            $select_checkbox = htmlspecialchars($_POST['bachage']);
         }
     }
 
-    
-    
-
     if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" Or $select_planche_serre == "Selectionnez une planche"){
-        $erreur = "Veuillez remplir tout les champs";
-
-    }elseif($_POST['zone'] == 'Jardin' and empty($_POST['planche'])) {
         $erreur = "Veuillez remplir tout les champs";
 
     }else {
@@ -135,9 +132,9 @@ if($_POST){
             'number_serre' => $select_serre,
             'number_planche' => $select_planche,
             'legume' => $select_legume,
-            'tache' => $select_tache." ".$select_preparation,
+            'tache' => $select_tache." ".$select_checkbox,
         ));
-        header('Location: /show.php');
+        header('Location: /index.php');
     }
 }
 
@@ -151,4 +148,5 @@ echo $twig->render('index.html.twig', [
     'legumes' => $legumes,
     'taches' => $taches,
     'erreur' => $erreur,
+    'erreur2' => $erreur2,
 ]);

@@ -32,6 +32,7 @@ $connectionParams = [
 // connection à la BDD
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
+$rotations = [];
 
 $reponse = $conn->query("SELECT * FROM rotation");
 while($req = $reponse->fetch()){
