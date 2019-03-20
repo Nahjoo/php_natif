@@ -8,6 +8,8 @@ select_tache.addEventListener("change" , tache);
 var preparation = document.querySelector(".preparation");
 var recolte = document.querySelector(".recolte");
 var couvert = document.querySelector(".couvert");
+var plastique = document.querySelector(".plastique");
+var bachage = document.querySelector(".bachage");
 
 
 
@@ -42,10 +44,8 @@ function tache() {
     }else {
         preparation.style.display = "none";
     }
-    
     if (select_tache.value == "Récolte"){
         recolte.style.display = "block";
-
     }else {
         recolte.style.display = "none";
     }
@@ -55,4 +55,11 @@ function tache() {
     }else {
         couvert.style.display = "none";
     }
+
+    if(plastique.checked == true){
+        bachage.style.display = "inline";
+    }else{
+        bachage.style.display = "none";
+    }
+
 }

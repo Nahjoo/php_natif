@@ -32,6 +32,10 @@ button{
     display: none;
 }
 
+.bachage{
+    display: none;
+}
+
 .card{
     width: 19rem;
     height: 25rem;   
