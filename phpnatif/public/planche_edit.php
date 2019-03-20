@@ -1,6 +1,7 @@
 <?php
 
 //*****************************Table planche************************************************
+$new_planche = "";
 // pagination de la table serre
 $reponse = $conn->query("SELECT Count(id) as nbArt FROM planche");
 $req = $reponse->fetch();
@@ -21,30 +22,36 @@ while($req = $reponse->fetch()){
     $planches[] = $req;
 }
 
-if(isset($_GET['id_planche'])){
-    $id_planche = $_GET['id_planche'];
-    $req = $conn->query("DELETE FROM planche WHERE planche.id = '$id_planche'");
-    header('Location: /add.php');
+if($_GET){
+    if(isset($_GET['id_planche'])){
+        $id_planche = $_GET['id_planche'];
+        $req = $conn->query("DELETE FROM planche WHERE planche.id = '$id_planche'");
+        header('Location: /add.php');
+    }
 }
+
 
 for($i=1; $i <= $nbPage; $i++){
     $planche_pages[] = $i;
 }
 
-if($_POST['new_planche']){
-    $add_planche = $_POST['new_planche'];
-    
-    if(empty($_POST['new_planche'])){
-        $erreur = "Veuillez remplir le champ vide";
+if($_POST){
+    if($_POST['new_planche']){
+        $add_planche = ucfirst($_POST['new_planche']);
         
-    }else {
-        $reponse = $conn->query("SELECT * FROM planche");
-        $req = $conn->prepare('INSERT INTO planche(name) VALUES(:name)');
-            $req->execute(array(
-                'name' => $add_planche,
-            ));
-    }   
-    header('Location: /add.php');
+        if(empty($_POST['new_planche'])){
+            $erreur = "Veuillez remplir le champ vide";
+            
+        }else {
+            $reponse = $conn->query("SELECT * FROM planche");
+            $req = $conn->prepare('INSERT INTO planche(name) VALUES(:name)');
+                $req->execute(array(
+                    'name' => $add_planche,
+                ));
+        }   
+        header('Location: /add.php');
+    }
 }
+
 
 //****************************END table planche*********************************************

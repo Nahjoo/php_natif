@@ -41,6 +41,11 @@ class Rotation
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Planche", inversedBy="rotations")
+     */
+    private $planche;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +112,18 @@ class Rotation
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getPlanche(): ?Planche
+    {
+        return $this->planche;
+    }
+
+    public function setPlanche(?Planche $planche): self
+    {
+        $this->planche = $planche;
 
         return $this;
     }

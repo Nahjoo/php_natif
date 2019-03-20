@@ -1,27 +1,19 @@
-var div = document.querySelector(".planche");
-var select1 = document.querySelector("#rotation_zone");
+var select_planche = document.querySelector(".planche");
+var select_zone = document.querySelector(".zone");
 
-select1.addEventListener("change", beat);
+select_zone.addEventListener("change", zone);
 
-function beat(){
+function zone(){
 
-    var select = document.createElement("select");
-    select.className = "oui";
-    var option = document.createElement("option");
-
-    if(select1.value == 1) 
+    if(select_zone.value == "Jardin") 
     {
-        select.appendChild(option);
-        option.display = "none";
-        option.innerHTML = "option 1";
-        div.appendChild(select)
+      select_planche.style.display = "inline";
+      select_planche.required = "required";
     } 
-    else if(select1.value == 2)
+    else
     {
-        select.appendChild(option);
-        select.display = none;
-        option.innerHTML = "Serre";
-        div.appendChild(select)
+        select_planche.style.display = "none";
+        select_planche.required = false;
     }
 
 }

@@ -36,6 +36,7 @@ $conn = DriverManager::getConnection($connectionParams, $config);
 $erreur = "";
 $select_planche = "";
 $select_serre = "";
+$serre_name = "";
 $select_preparation = "";
 
 
@@ -70,7 +71,6 @@ while($req = $reponse->fetch()){
 }
 
 if($_POST){
-
     if(htmlspecialchars($_POST["zone"]) == "Jardin"){
         $select_planche = htmlspecialchars($_POST["planche"]);
         
@@ -94,29 +94,41 @@ if($_POST){
     $select_legume = htmlspecialchars($_POST["legume"]);
     $select_tache = htmlspecialchars($_POST["tache"]);
 
-    if(isset($_POST['tache']) == "Preparation sol"){
+    if(isset($_POST['tache']) == "Préparation sol"){
         if(isset($_POST["manuel"])){
             $select_preparation = htmlspecialchars($_POST["manuel"]);
             
         }else {
-            $select_preparation = htmlspecialchars($_POST["traction"]);
+            if(isset($_POST['traction'])){
+                $select_preparation = htmlspecialchars($_POST["traction"]);
+            }
+            
         }
-    }
 
-    if(isset($_POST['tache']) == "Récolte"){
+    }elseif(isset($_POST['tache']) == "Récolte"){
+
         if(isset($_POST["kg"])){
             $select_preparation = htmlspecialchars($_POST['kg']);
         }elseif(isset($_POST['botte'])){
             $select_preparation = htmlspecialchars($_POST['botte']);
         }else {
-            $select_preparation = htmlspecialchars($_POST['unite']);
+            if(isset($_POST['unite'])){
+                $select_preparation = htmlspecialchars($_POST['unite']);
+            }
+            
         }
     }
+
+    
     
 
-    if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre"){
+    if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" Or $select_planche_serre == "Selectionnez une planche"){
         $erreur = "Veuillez remplir tout les champs";
-    } else {
+
+    }elseif($_POST['zone'] == 'Jardin' and empty($_POST['planche'])) {
+        $erreur = "Veuillez remplir tout les champs";
+
+    }else {
         $req = $conn->prepare('INSERT INTO rotation(zone , number_serre, number_planche ,legume, tache) VALUES(:zone ,:number_serre, :number_planche ,:legume , :tache )');
         $req->execute(array(
             'zone' => $select_zone,

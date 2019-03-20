@@ -33,6 +33,8 @@ $connectionParams = [
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
 $erreur = "";
+$new_serre = "";
+$new_tache = "";
 
 include ("zone_edit.php");
 include ("legume_edit.php");
@@ -48,11 +50,14 @@ $Perpage = 4;
 $nbPage = ceil($nbArt/$Perpage);
 $cPage = 1;
 
-if(isset($_GET['serre']) && $_GET['serre']>0 && $_GET['serre']<=$nbPage){
-    $cPage = $_GET['serre'];
-}else {
-    $cPage = 1;
+if($_GET){
+    if(isset($_GET['serre']) && $_GET['serre']>0 && $_GET['serre']<=$nbPage){
+        $cPage = $_GET['serre'];
+    }else {
+        $cPage = 1;
+    }
 }
+
 
 // recuperation de la table serre
 $reponse = $conn->query("SELECT * FROM serre LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
@@ -70,23 +75,26 @@ for($i=1; $i <= $nbPage; $i++){
     $serre_pages[] = $i;
 }
 
-if($_POST['new_serre']){
-    $add_serre = $_POST['new_serre'];
-    $nb_planche = $_POST['nb_planche'];
-    
-    if(empty($_POST['new_serre']) Or empty($_POST['nb_planche'])){
-        $erreur = "Veuillez remplir le champ vide";
+if($_POST){
+    if($_POST['new_serre']){
+        $add_serre = ucfirst($_POST['new_serre']);
+        $nb_planche = $_POST['nb_planche'];
         
-    }else {
-        $reponse = $conn->query("SELECT * FROM serre");
-        $req = $conn->prepare('INSERT INTO serre(name, number_planche) VALUES(:name, :number_planche)');
-            $req->execute(array(
-                'name' => $add_serre,
-                'number_planche' => $nb_planche,
-            ));
-    }   
-    header('Location: /add.php');
+        if(empty($_POST['new_serre']) Or empty($_POST['nb_planche'])){
+            $erreur = "Veuillez remplir le champ vide";
+            
+        }else {
+            $reponse = $conn->query("SELECT * FROM serre");
+            $req = $conn->prepare('INSERT INTO serre(name, number_planche) VALUES(:name, :number_planche)');
+                $req->execute(array(
+                    'name' => $add_serre,
+                    'number_planche' => $nb_planche,
+                ));
+        }   
+        header('Location: /add.php');
+    }
 }
+
 
 //****************************END table serre*************************************************
 //******************************Table tache***************************************************
@@ -98,14 +106,18 @@ $Perpage = 4;
 $nbPage = ceil($nbArt/$Perpage);
 $cPage = 1;
 
-if(isset($_GET['tache']) && $_GET['tache']>0 && $_GET['serre']<=$nbPage){
-    $cPage = $_GET['tache'];
-}else {
-    $cPage = 1;
+if($_GET){
+    if(isset($_GET['tache']) && $_GET['tache']>0 && $_GET['tache']<=$nbPage){
+        $cPage = $_GET['tache'];
+    }else {
+        $cPage = 1;
+    }
 }
+$valeur1 = ceil((($cPage - 1) * $Perpage));
+
 
 // recuperation de la table tache
-$reponse = $conn->query("SELECT * FROM tache LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
+$reponse = $conn->query("SELECT * FROM tache LIMIT ".$valeur1.",$Perpage");
 while($req = $reponse->fetch()){
     $taches[] = $req;
 }
@@ -120,21 +132,24 @@ for($i=1; $i <= $nbPage; $i++){
     $tache_pages[] = $i;
 }
 
-if($_POST['new_tache']){
-    $add_tache = $_POST['new_tache'];
-    
-    if(empty($_POST['new_tache'])){
-        $erreur = "Veuillez remplir le champ vide";
+if($_POST){
+    if($_POST['new_tache']){
+        $add_tache = ucfirst($_POST['new_tache']);
         
-    }else {
-        $reponse = $conn->query("SELECT * FROM tache");
-        $req = $conn->prepare('INSERT INTO tache(name) VALUES(:name)');
-            $req->execute(array(
-                'name' => $add_tache,
-            ));
-    }   
-    header('Location: /add.php');
+        if(empty($_POST['new_tache'])){
+            $erreur = "Veuillez remplir le champ vide";
+            
+        }else {
+            $reponse = $conn->query("SELECT * FROM tache");
+            $req = $conn->prepare('INSERT INTO tache(name) VALUES(:name)');
+                $req->execute(array(
+                    'name' => $add_tache,
+                ));
+        }   
+        header('Location: /add.php');
+    }
 }
+
 
 //******************************END table tache***********************************************
 

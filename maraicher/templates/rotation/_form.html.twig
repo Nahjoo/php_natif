@@ -1,4 +1,39 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+    <div class="form-group">
+        <label>Nom de la Rotation</label>
+        {{ form_widget(form.name) }}
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        {{ form_widget(form.date) }}
+    </div>
+
+    <div class="form-group">
+        <label>Selectionnez une Zone</label>
+        {{ form_widget(form.zone , { 'attr': {'class': 'zone'} }) }}
+    </div>
+
+    <div class="form-group">
+        <label>Selectionnez une planche</label>
+        {{ form_widget(form.planche, { 'attr': {'class': 'planche'} }) }}
+    </div>
+
+    <div class="form-group">
+        <label>Selectionnez un legume</label>
+        {{ form_widget(form.legume) }}
+    </div>
+
+    <div class="form-group">
+        <label>Selectionnez une tache</label>
+        {{ form_widget(form.tache) }}
+    </div>
+
+    <div class="form-group">
+        
+    </div>
+    
     <button class="btn">{{ button_label|default('Save') }}</button>
+
 {{ form_end(form) }}

@@ -10,30 +10,33 @@ var recolte = document.querySelector(".recolte");
 var couvert = document.querySelector(".couvert");
 
 
+
 function zone(event){
     event.preventDefault();
     if(select_zone.value == "Jardin"){
         select_planche.style.display = "inline";
-        
+        select_planche.value = "Selectionnez une planche";
     }else {
         select_planche.style.display = "none" ;
-        select_planche.value = "Selectionnez une planche";
+        select_planche.value = null;
     }
 
     if (select_zone.value == "Serre"){
         select_serre.style.display = "inline";
         select_planche_serre.style.display = 'inline';
+        select_planche_serre.value = "Selectionnez une planche";
+        select_serre.value = "Selectionnez une serre";
     }else {
         select_serre.style.display = "none" ;
         select_planche_serre.style.display = 'none';
-        select_serre.value = "Selectionnez une serre";
-        select_planche_serre.value = "Selectionnez une planche";
+        select_serre.value = null;
+        select_planche_serre.value = null;
     }
 }
 
 function tache() {
 
-    if(select_tache.value == "Preparation sol"){
+    if(select_tache.value == "Préparation sol"){
         preparation.style.display = "block";
 
     }else {

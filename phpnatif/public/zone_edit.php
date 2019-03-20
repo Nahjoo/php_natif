@@ -1,5 +1,7 @@
 <?php
 // ****************************************Table ZONE******************************************
+$new_zone = "";
+
 // pagination de la table zone
 $reponse = $conn->query("SELECT Count(id) as nbArt FROM zone");
 $req = $reponse->fetch();
@@ -34,19 +36,22 @@ for($i=1; $i <= $nbPage; $i++){
     $pages[] = $i;
 }
 
-if($_POST['new_zone']){
-    $add_zone = $_POST['new_zone'];
-    // $add_serre = $_POST['new_serre'];
-    if(empty($_POST['new_zone'])){
-        $erreur = "Veuillez remplir le champ vide";
-        
-    }else {
-        $reponse = $conn->query("SELECT * FROM zone");
-        $req = $conn->prepare('INSERT INTO zone(name) VALUES(:name)');
-            $req->execute(array(
-                'name' => $_POST['new_zone'],
-            ));
+if($_POST){
+    if($_POST['new_zone']){
+        $add_zone = ucfirst($_POST['new_zone']);
+        // $add_serre = $_POST['new_serre'];
+        if(empty($_POST['new_zone'])){
+            $erreur = "Veuillez remplir le champ vide";
+            
+        }else {
+            $reponse = $conn->query("SELECT * FROM zone");
+            $req = $conn->prepare('INSERT INTO zone(name) VALUES(:name)');
+                $req->execute(array(
+                    'name' => $_POST['new_zone'],
+                ));
+        }
+        header('Location: /add.php');
     }
-    header('Location: /add.php');
+
 }
 // ****************************END table ZONE***********************************************
