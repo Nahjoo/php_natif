@@ -17,11 +17,12 @@ if(isset($_GET['planche']) && $_GET['planche']>0 && $_GET['planche']<=$nbPage){
 }
 
 // recuperation de la table planche
-$reponse = $conn->query("SELECT * FROM planche LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
+$reponse = $conn->query("SELECT * FROM planche ORDER BY name LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
 while($req = $reponse->fetch()){
     $planches[] = $req;
 }
 
+// recover id in URL end delete the line with the id in url
 if($_GET){
     if(isset($_GET['id_planche'])){
         $id_planche = $_GET['id_planche'];
@@ -35,7 +36,9 @@ for($i=1; $i <= $nbPage; $i++){
     $planche_pages[] = $i;
 }
 
+// check if the formulaire as send
 if($_POST){
+    // recover the value of dropdown planche
     if($_POST['new_planche']){
         $add_planche = ucfirst($_POST['new_planche']);
         

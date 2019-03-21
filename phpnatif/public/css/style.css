@@ -10,6 +10,12 @@
     display: none;
 }
 
+.edit{
+    display: flex;
+    align-items: center;
+    margin-top: 3vh;
+}
+
 select{
     display: flex;
     align-items: center;

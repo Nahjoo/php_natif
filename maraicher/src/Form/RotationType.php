@@ -26,6 +26,7 @@ class RotationType extends AbstractType
             ->add('zone')
             ->add('planche')
             ->add('legume')
+            ->add('serre')
             ->add('tache');
     }
 

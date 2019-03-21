@@ -46,6 +46,11 @@ class Rotation
      */
     private $planche;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Serre", inversedBy="rotations")
+     */
+    private $serre;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,6 +129,18 @@ class Rotation
     public function setPlanche(?Planche $planche): self
     {
         $this->planche = $planche;
+
+        return $this;
+    }
+
+    public function getSerre(): ?Serre
+    {
+        return $this->serre;
+    }
+
+    public function setSerre(?Serre $serre): self
+    {
+        $this->serre = $serre;
 
         return $this;
     }

@@ -3,6 +3,7 @@ easy_admin:
        # List the entity class name you want to manage
        - App\Entity\Zone
        - App\Entity\Planche
+       - App\Entity\Serre
        - App\Entity\Legume
        - App\Entity\Tache
        - App\Entity\Rotation

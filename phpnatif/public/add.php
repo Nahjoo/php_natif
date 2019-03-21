@@ -60,11 +60,12 @@ if($_GET){
 
 
 // recuperation de la table serre
-$reponse = $conn->query("SELECT * FROM serre LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
+$reponse = $conn->query("SELECT * FROM serre ORDER BY name LIMIT ".(($cPage - 1) * $Perpage).",$Perpage");
 while($req = $reponse->fetch()){
     $serres[] = $req;
 }
 
+// recover id in URL end delete the line with the id in url
 if(isset($_GET['id_serre'])){
     $id_serre = $_GET['id_serre'];
     $req = $conn->query("DELETE FROM serre WHERE serre.id = '$id_serre'");
@@ -76,19 +77,19 @@ for($i=1; $i <= $nbPage; $i++){
 }
 
 if($_POST){
+    // recover the value of dropdown serre
     if($_POST['new_serre']){
         $add_serre = ucfirst($_POST['new_serre']);
         $nb_planche = $_POST['nb_planche'];
         
-        if(empty($_POST['new_serre']) Or empty($_POST['nb_planche'])){
+        if(empty($_POST['new_serre'])){
             $erreur = "Veuillez remplir le champ vide";
             
         }else {
             $reponse = $conn->query("SELECT * FROM serre");
-            $req = $conn->prepare('INSERT INTO serre(name, number_planche) VALUES(:name, :number_planche)');
+            $req = $conn->prepare('INSERT INTO serre(name) VALUES(:name)');
                 $req->execute(array(
                     'name' => $add_serre,
-                    'number_planche' => $nb_planche,
                 ));
         }   
         header('Location: /add.php');
@@ -117,11 +118,12 @@ $valeur1 = ceil((($cPage - 1) * $Perpage));
 
 
 // recuperation de la table tache
-$reponse = $conn->query("SELECT * FROM tache LIMIT ".$valeur1.",$Perpage");
+$reponse = $conn->query("SELECT * FROM tache ORDER BY name LIMIT ".$valeur1.",$Perpage");
 while($req = $reponse->fetch()){
     $taches[] = $req;
 }
 
+// recover id in URL end delete the line with the id in url
 if(isset($_GET['id_tache'])){
     $id_tache = $_GET['id_tache'];
     $req = $conn->query("DELETE FROM tache WHERE tache.id = '$id_tache'");
@@ -133,6 +135,7 @@ for($i=1; $i <= $nbPage; $i++){
 }
 
 if($_POST){
+    // recover the value of dropdown tache
     if($_POST['new_tache']){
         $add_tache = ucfirst($_POST['new_tache']);
         

@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <form action="" method="POST">
+        {% for rotation in rotations %}
+        <div class="form-group">
+            <label>Zone</label>
+            <input type="text" class="form-control" name="zone" value="{{ rotation['zone'] }}">
+        </div>
+        {% if rotation['number_serre'] == null %}
+        <div class="form-group">
+            <label>Serre</label>
+            <input type="text" class="form-control" name="serre" placeholder="aucune serre">
+        </div>
+        {% else %}
+        <div class="form-group">
+            <label>Serre</label>
+            <input type="text" class="form-control" name="serre" value="{{ rotation['number_serre'] }}">
+        </div>
+        {% endif %}
+        {% if rotation['number_planche'] == null %}
+        <div class="form-group">
+            <label>Planche</label>
+            <input type="text" class="form-control" name="planche" placeholder="aucune planche">
+        </div>
+        {% else %}
+        <div class="form-group">
+            <label>Planche</label>
+            <input type="text" class="form-control" name="planche" value="{{ rotation['number_planche'] }}">
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label>Legume</label>
+            <input type="text" class="form-control" name="legume" value="{{ rotation['legume'] }}">
+        </div>
+        <div class="form-group">
+            <label>Tache</label>
+            <input type="text" class="form-control" name="tache" value="{{ rotation['tache'] }}">
+        </div>
+        {% endfor %}
+        <button type="submit" href="show.php" class="btn btn-primary">Modifier</button>
+    </form>
+    <form action="show.php">
+        <button type="submit" href="show.php" class="btn btn-primary">Annuler</button>
+    </form>
+    
+</div>
+
+{% endblock %}

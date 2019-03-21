@@ -15,9 +15,14 @@
         {{ form_widget(form.zone , { 'attr': {'class': 'zone'} }) }}
     </div>
 
-    <div class="form-group">
+    <div class="form-group planche">
         <label>Selectionnez une planche</label>
-        {{ form_widget(form.planche, { 'attr': {'class': 'planche'} }) }}
+        {{ form_widget(form.planche, { 'attr': {'class': 'required_planche'} }) }}
+    </div>
+
+    <div class="form-group serre">
+        <label>Selectionnez une serre</label>
+        {{ form_widget(form.serre, { 'attr': {'class': 'required_serre'} }) }}
     </div>
 
     <div class="form-group">

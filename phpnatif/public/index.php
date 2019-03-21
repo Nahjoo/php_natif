@@ -34,75 +34,79 @@ $connectionParams = [
 $conn = DriverManager::getConnection($connectionParams, $config);
 
 $erreur = "";
-$erreur2 = "";
 $select_planche = "";
 $select_serre = "";
 $serre_name = "";
 $select_checkbox = "";
 
 
-// recuperation de la table zone
-$reponse = $conn->query("SELECT * FROM zone");
+// recover de la table zone
+$reponse = $conn->query("SELECT * FROM zone ORDER BY name");
 while($req = $reponse->fetch()){
     $zones[] = $req;
 }
 
-// recuperation de la table planche
-$reponse = $conn->query("SELECT * FROM planche");
+// recover de la table planche
+$reponse = $conn->query("SELECT * FROM planche ORDER BY name");
 while($req = $reponse->fetch()){
     $planches[] = $req;
 }
 
-// recuperation de la table serre
-$reponse = $conn->query("SELECT * FROM serre");
+// recover de la table serre
+$reponse = $conn->query("SELECT * FROM serre ORDER BY name");
 while($req = $reponse->fetch()){
     $serres[] = $req;
 }
 
-// recuperation de la table legume
-$reponse = $conn->query("SELECT * FROM legume");
+// recover de la table legume
+$reponse = $conn->query("SELECT * FROM legume ORDER BY name");
 while($req = $reponse->fetch()){
     $legumes[] = $req;
 }
 
-// recuperation de la table tache
-$reponse = $conn->query("SELECT * FROM tache");
+// recover table tache
+$reponse = $conn->query("SELECT * FROM tache ORDER BY name");
 while($req = $reponse->fetch()){
     $taches[] = $req;
 }
 
+// lets you know if the form is validated
 if($_POST){
     
+    // check if the dropdown zone  egale value
     if(htmlspecialchars($_POST["zone"]) == "Jardin"){
         $select_planche = htmlspecialchars($_POST["planche"]);
         
+    // elseif check if the dropdown zone  egale value    
     }elseif (htmlspecialchars($_POST['serre'])) {
         $select_planche = htmlspecialchars($_POST['planche_serre']);
     }
     
+    // otherwise set the value to null
     else {
         $select_planche = null; 
     }
 
+    // check if the dropdown zone  egale value
     if(htmlspecialchars($_POST["zone"]) == "Serre"){
         $select_serre = htmlspecialchars($_POST["serre"]);
         
+    // otherwise set the value to null
     }else {
         $select_serre = null;
     }
    
-    
+    // recove value of dropdown zone / legume / tache
     $select_zone = htmlspecialchars($_POST["zone"]);
     $select_legume = htmlspecialchars($_POST["legume"]);
     $select_tache = htmlspecialchars($_POST["tache"]);
 
+    // check if checkbox is checked
     if($_POST['tache'] == "Préparation sol"){
         if(isset($_POST["manuel"])){
             $select_checkbox = htmlspecialchars($_POST["manuel"]);
-        }elseif(isset($_POST['traction'])) {
-            $select_checkbox = htmlspecialchars($_POST["traction"]);
         }else {
-            
+            $select_checkbox = htmlspecialchars($_POST["traction"]);
         }
     }elseif($_POST['tache'] == "Récolte"){
         if(isset($_POST["kg"])){
@@ -122,9 +126,11 @@ if($_POST){
         }
     }
 
+    // check if all dropdown as selected or not 
     if($select_zone == "Selectionnez une zone" Or $select_legume == "Selectionnez un legume" Or $select_tache == "Selectionnez une tache" Or $select_planche == "Selectionnez une planche" Or $select_serre == "Selectionnez une serre" Or $select_planche_serre == "Selectionnez une planche"){
         $erreur = "Veuillez remplir tout les champs";
 
+    // if all dropdown as select insert the value in table rotation
     }else {
         $req = $conn->prepare('INSERT INTO rotation(zone , number_serre, number_planche ,legume, tache) VALUES(:zone ,:number_serre, :number_planche ,:legume , :tache )');
         $req->execute(array(
@@ -148,5 +154,4 @@ echo $twig->render('index.html.twig', [
     'legumes' => $legumes,
     'taches' => $taches,
     'erreur' => $erreur,
-    'erreur2' => $erreur2,
 ]);

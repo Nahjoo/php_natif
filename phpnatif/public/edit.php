@@ -32,24 +32,23 @@ $connectionParams = [
 // connection à la BDD
 // la variable `$conn` permet de communiquer avec la BDD
 $conn = DriverManager::getConnection($connectionParams, $config);
-$rotations = [];
 
-$reponse = $conn->query("SELECT * FROM rotation ORDER BY zone");
-while($req = $reponse->fetch()){
-    $rotations[] = $req;
-}
 
-// recover the id in URL
 if(isset($_GET['id'])){
-    // delete
-    $id = $_GET['id'];
-    $req = $conn->query("DELETE FROM rotation WHERE rotation.id = '$id'");
-    header('Location: /show.php');
+    $id = htmlspecialchars($_GET['id']);
+    $reponse = $conn->query("SELECT * FROM rotation WHERE rotation.id = '$id'");
+    while($req = $reponse->fetch()){
+        $rotations[] = $req;
+    }
 }
+
+if($_POST){
+    $zone = 
+}
+
 
 // affichage du rendu d'un template
-echo $twig->render('show.html.twig', [
+echo $twig->render('edit.html.twig', [
     // transmission de données au template
     'rotations' => $rotations,
-    
 ]);
